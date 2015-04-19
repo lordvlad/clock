@@ -11,7 +11,7 @@ bpkg install [-g] lordvlad/clock
 
 # Usage
 ```sh
-clock <command> [<task>] [-m <message>] [-f <clockfile>] [-t <dir>]
+clock <command> [<task>] [-m <message>] [-f <clockfile>]
 ```
 
 ## Commands

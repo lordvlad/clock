@@ -3,7 +3,7 @@
 function clock() {
     read -r -d '' USAGE <<EOF
 clock task timer v0.0.1
-usage: clock <command> [<task>] [-m <message>] [-f <clockfile>] [-t <dir>]
+usage: clock <command> [<task>] [-m <message>] [-f <clockfile>]
 
 Track your working times using file system directories as
 task identifiers.
