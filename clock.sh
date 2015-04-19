@@ -80,12 +80,14 @@ EOF
             if [[ -n $cur ]]
             then
                 echo -e "$now\tout\t$cur\t$message" >> $file
+                echo "clocked out $cur"
             fi
         fi
     }
 
     function clockIn() {
         echo -e "$now\tin\t$task\t$message" >> $file
+        echo "clocked in $task"
     }
 
     # clock in
@@ -121,7 +123,7 @@ EOF
             # in seconds, using the timestamp at clock-out ($1 on lines matching 'out.*' and the
             # timestamp at clock-in (a=$1 on each line). Then print the difference (s) in hh:mm:ss
             # format followed by the task name and message ($3 and $4)
-            eval "awk '/out.*$tmp/{s=\$1-a; h=int(s/60/60); s=s-h*60*60; m=int(s/60); s=s-m*60; print sprintf(\"%02d\", h) \":\" sprintf(\"%02d\", m) \":\" sprintf(\"%02d\", s) \"\t\" \$3 FS \$4} {a=\$1}' $file"
+            eval "awk '/out.*$tmp/{s=\$1-a; h=int(s/60/60); s=s-h*60*60; m=int(s/60); s=s-m*60; print strftime(\"%c\", a) \"\t\" sprintf(\"%02d\", h) \":\" sprintf(\"%02d\", m) \":\" sprintf(\"%02d\", s) \"\t\" \$3 FS \$4} {a=\$1}' $file"
         else
             echo "No tasks recorded yet"
         fi
