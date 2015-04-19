@@ -20,8 +20,8 @@ task:
   will be used as task specifier
 
 options:
-  -m --message      record additional message when clocking in/out
-  -f --file         where to save the clocks, defaults to $HOME/.clocks
+  -m|--message      record additional message when clocking in/out
+  -f|--file         where to save the clocks, defaults to $HOME/.clocks
 
 EOF
 
