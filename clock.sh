@@ -59,7 +59,7 @@ EOF
                     taskSet=true
                     shift
                 else
-                    echo "Don't know what to do with the argument $2"
+                    echo "Don't know what to do with the argument $1"
                     exit 1
                 fi
                 ;;
@@ -91,7 +91,7 @@ EOF
     }
 
     # clock in
-    if [ $command = "in" ]
+    if [[ $command = "in" ]]
     then
         # first, try to clock out
         clockOut
@@ -101,14 +101,14 @@ EOF
     fi
 
     # clock out
-    if [ $command = "out" ]
+    if [[ $command = "out" ]]
     then
         clockOut $task
         exit 0
     fi
 
     # show log
-    if [ $command = "log" ]
+    if [[ $command = "log" ]]
     then
         if [[ -f $file ]]
         then
