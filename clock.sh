@@ -22,6 +22,7 @@ task:
 options:
   -m|--message      record additional message when clocking in/out
   -f|--file         where to save the clocks, defaults to $HOME/.clocks
+     --by-task      sort log entries by task for clock log
 
 EOF
 
@@ -38,6 +39,10 @@ EOF
     do
         key="$1"
         case $key in
+            --by-task)
+                sortByTask=true
+                shift
+                ;;
             -m|--message)      # set clock in/out message
                 message="$2"
                 shift
@@ -123,7 +128,17 @@ EOF
             # in seconds, using the timestamp at clock-out ($1 on lines matching 'out.*' and the
             # timestamp at clock-in (a=$1 on each line). Then print the difference (s) in hh:mm:ss
             # format followed by the task name and message ($3 and $4)
-            eval "awk -F $'\t' '/out.*$tmp/{s=\$1-a; h=int(s/60/60); s=s-h*60*60; m=int(s/60); s=s-m*60; print strftime(\"%c\", a) \"\t\" sprintf(\"%02d\", h) \":\" sprintf(\"%02d\", m) \":\" sprintf(\"%02d\", s) \"\t\" \$3 FS \$4} {a=\$1}' $file"
+            cmd="awk -F $'\t' '/out.*$tmp/{s=\$1-a; h=int(s/60/60); s=s-h*60*60; m=int(s/60); s=s-m*60; print strftime(\"%c\", a) \"\t\" sprintf(\"%02d\", h) \":\" sprintf(\"%02d\", m) \":\" sprintf(\"%02d\", s) \"\t\" \$3 FS \$4} {a=\$1}' $file"
+
+            if [[ $sortByTask = true ]]
+            then
+                # because of the formatted time and date, the task is now in the 8th column
+                cmd="$cmd | sort -k8"
+                echo "$cmd"
+            fi
+
+            eval "$cmd"
+
         else
             echo "No tasks recorded yet"
         fi

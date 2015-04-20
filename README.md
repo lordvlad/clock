@@ -27,4 +27,5 @@ clock <command> [<task>] [-m <message>] [-f <clockfile>]
 
 ## Options
 -  `-m|--message`      record additional message when clocking in/out
--  `-f|--file`         where to save the clocks, defaults to $HOME/.clocks
+-  `-f|--file`         where to save the clocks, defaults to `$HOME/.clocks`
+-      --by-task       sort log entries by task for `clock log`
