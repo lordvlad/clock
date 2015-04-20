@@ -145,6 +145,29 @@ EOF
         exit 0
     fi
 
+    # show sums
+    if [[ $command = "list" ]]
+    then
+        if [[ -f $file ]]
+        then
+            if [[ $taskSet = true ]]
+            then
+                tmp=${task//\//\\\/}
+            else
+                tmp=""
+            fi
+
+            cmd="awk -F $'\t' '/out.*$tmp/{s=\$1-a; print s FS \$3 FS \$4}{a=\$1}' $file"
+            cmd="$cmd | sort -k2"
+            cmd="$cmd | awk -F $'\t' 'BEGIN{s=0;a=0;b=\"\";c=\"\"}{if(b==\$2){s=s+\$1}else{h=int(s/60/60); s=s-h*60*60; m=int(s/60); s=s-m*60; print sprintf(\"%02d\", h) \":\" sprintf(\"%02d\", m) \":\" sprintf(\"%02d\", s) FS b FS c; s=a;}}{a=\$1;b=\$2;c=\$3}END{h=int(s/60/60); s=s-h*60*60; m=int(s/60); s=s-m*60; print sprintf(\"%02d\", h) \":\" sprintf(\"%02d\", m) \":\" sprintf(\"%02d\", s) FS b FS c}'"
+            cmd="$cmd | tail -n+2"
+            eval "$cmd"
+        else
+            echo "No tasks recorded yet"
+        fi
+        exit 0
+    fi
+
     # show usage info
     echo "$USAGE"
     exit 0
