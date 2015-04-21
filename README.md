@@ -29,3 +29,9 @@ clock <command> [<task>] [-m <message>] [-f <clockfile>]
 -  `-m|--message`      record additional message when clocking in/out
 -  `-f|--file`         where to save the clocks, defaults to `$HOME/.clocks`
 -      --by-task       sort log entries by task for `clock log`
+-      --gt=DATE       show only log entries after DATE
+                       summarize only entries after DATE for list view
+                       DATE will take anything that works with unix' date command
+-      --lt=DATE       show only log entries before DATE
+                       summarize only entries before DATE for list view
+                       DATE will take anything that works with unix' date command
