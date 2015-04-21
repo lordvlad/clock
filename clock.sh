@@ -61,6 +61,10 @@ EOF
                 elif [[ -z $task ]]
                 then
                     task=$(readlink -e "$1")
+                    if [[ -z $task ]]
+                    then
+                        task="$1"
+                    fi
                     taskSet=true
                     shift
                 else
