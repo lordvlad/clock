@@ -11,7 +11,7 @@ bpkg install [-g] lordvlad/clock
 
 # Usage
 ```sh
-clock <command> [<task>] [-m <message>] [-f <clockfile>]
+clock <command> [<task>] [<options>]
 ```
 
 ## Commands
@@ -29,7 +29,28 @@ clock <command> [<task>] [-m <message>] [-f <clockfile>]
 -  `-m|--message`      record additional message when clocking in/out
 -  `-f|--file`         where to save the clocks, defaults to `$HOME/.clocks`
 -  `   --by-task`      sort log entries by task for `clock log`
--  `    --gt=DATE`     with `clock log`, show only entries after `DATE`, with `clock list` sum up only entries after `DATE`.
+-  `   --gt=DATE`     with `clock log`, show only entries after `DATE`, with `clock list` sum up only entries after `DATE`.
                        `DATE` can be any string that unix' `date` understands
-- `     --lt=DATE`     with `clock log`, show only entries before `DATE`, with `clock list` sum up only entries before `DATE`.
+- `    --lt=DATE`     with `clock log`, show only entries before `DATE`, with `clock list` sum up only entries before `DATE`.
                        `DATE` can be any string that unix' `date` understands
+
+
+# Examples
+
+```sh
+$ mkdir -p tasks/{work,sleep}
+$ clock in tasks/work
+> clocked in /home/lordvlad/tasks/work
+$ clock in tasks/sleep
+> clocked out /home/lordvlad/tasks/work
+> clocked in /home/lordvlad/tasks/sleep
+$ clock out
+> clocked out /home/lordvlad/tasks/sleep
+$ clock log
+> Tue 21 Apr 2015 06:31:24 PM UTC 00:01:23        /home/wre/tasks/work
+> Tue 21 Apr 2015 06:32:47 PM UTC 00:00:04        /home/wre/tasks/sleep
+$ clock list
+> 00:00:04        /home/wre/tasks/sleep
+> 00:01:23        /home/wre/tasks/work
+```
+
