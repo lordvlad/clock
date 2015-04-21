@@ -50,7 +50,7 @@ $ clock log
 > Tue 21 Apr 2015 06:31:24 PM UTC 00:01:23        /home/wre/tasks/work
 > Tue 21 Apr 2015 06:32:47 PM UTC 00:00:04        /home/wre/tasks/sleep
 $ clock list
-> 00:00:04        /home/wre/tasks/sleep
-> 00:01:23        /home/wre/tasks/work
+> 00:00:04        /home/lordvlad/tasks/sleep
+> 00:01:23        /home/lordvlad/tasks/work
 ```
 
