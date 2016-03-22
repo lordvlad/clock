@@ -9,11 +9,12 @@ Track your working times using file system directories as
 task identifiers.
 
 commands:
-  help    show this help
-  in      clock in, will clock out any running task
-  out     clock out
-  log     show all log entries, or log entries for <task>
-  list    show sums for all tasks
+  help          show this help
+  in            clock in, will clock out any running task
+  out           clock out
+  log           show all log entries, or log entries for <task>
+  list          show sums for all tasks
+  completion    print completion script
 
 task:
   if no task is specified, the current working directory
@@ -29,6 +30,32 @@ options:
                     summarize only entries before DATE for list view
 
 EOF
+
+    read -r -d '' COMPLETION <<EOF
+_clock()
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="\$COMP_WORDS[COMP_CWORD]"
+    prev="\$COMP_WORDS[COMP_CWORD-1]"
+
+    case "\$prev" in
+        "in")
+            local opts=\$(clock tasks)
+            COMPREPLY=( \$(compgen -W "\$opts" -- \$cur) )
+            return 0 
+            ;;
+        *)
+            local opts="in out help log list completion"
+            COMPREPLY=( \$(compgen -W "\$opts" -- \$cur) )
+            return 0
+        ;;
+    esac
+    return 0 
+}
+complete -F _clock clock
+EOF
+
 
     # set defaults
     now=`date +%s`
@@ -189,6 +216,18 @@ EOF
         exit 0
     fi
 
+    # show tasks
+    if [[ $command = "tasks" ]]
+    then
+        if [[ -f $file ]]
+        then
+            eval "cut -f3 $file | sort | uniq" 
+        else
+            echo "No tasks recorded yet."
+        fi
+        exit 0
+    fi
+
     # show sums
     if [[ $command = "list" ]]
     then
@@ -260,6 +299,13 @@ EOF
         exit 0
     fi
 
+    # print completion code 
+    if [[ $command = "completion" ]]
+    then
+      echo "$COMPLETION"
+      exit 0
+    fi
+
     # show usage info
     echo "$USAGE"
     exit 0
@@ -272,3 +318,5 @@ else
   clock "${@}"
   exit 0
 fi
+
+

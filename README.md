@@ -15,11 +15,12 @@ clock <command> [<task>] [<options>]
 ```
 
 ## Commands
--  `clock help`    show the help
--  `clock in`      clock in, will clock out any running task
--  `clock out`     clock out
--  `clock log`     show all log entries, or log entries for `<task>`
--  `clock list`    show sums for all tasks
+-  `clock help`         show the help
+-  `clock in`           clock in, will clock out any running task
+-  `clock out`          clock out
+-  `clock log`          show all log entries, or log entries for `<task>`
+-  `clock list`         show sums for all tasks
+-  `clock completion`   print the completion script
 
 ## Task
   If no task is specified, the current working directory
