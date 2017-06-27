@@ -2,7 +2,7 @@
   "name": "clock",
   "version": "0.0.1",
   "description": "Track your working hours on the command line",
-  "install": "install -b clock.sh ${PREFIX:-/usr/local}/bin/clock",
+  "install": "make install",
   "scripts": [ "clock.sh" ]
 }
 
