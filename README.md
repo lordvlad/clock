@@ -6,7 +6,12 @@ Track your working hours on the command line
 
 Available as a [bpkg](http://www.bpkg.io/)
 ```sh
-bpkg install [-g] lordvlad/clock
+bpkg install -g lordvlad/clock
+``` 
+
+Because getting sudo working can be a bitch:
+```sh
+sudo -E env "PATH=$PATH" bpkg install -g lordvlad/clock
 ```
 
 # Usage
