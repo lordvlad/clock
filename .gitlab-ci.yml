@@ -1,4 +1,4 @@
-image: busybox:latest
+image: alpine:latest
  
 build:
  stage: build
