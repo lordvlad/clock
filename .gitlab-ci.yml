@@ -1,4 +1,4 @@
-image: alpine:latest
+image: alpine-make:latest
  
 build:
  stage: build
