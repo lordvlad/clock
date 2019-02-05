@@ -58,7 +58,7 @@ EOF
 
 
     # set defaults
-    now=`date +%s`
+    now="$(date +%s)"
     file="$HOME/.clock"
     command=""
     task=""
@@ -121,7 +121,7 @@ EOF
     # default task is current working directory
     if [[ -z $task ]]
     then
-        task=`pwd`
+        task="$(pwd)"
     fi
 
     function clockOut() {
