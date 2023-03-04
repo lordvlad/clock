@@ -1,6 +1,6 @@
 # clock
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6fb84e7e4ffd45ebae49f132ad0dc8f5)](https://app.codacy.com/app/lordvlad/clock?utm_source=github.com&utm_medium=referral&utm_content=lordvlad/clock&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e8397d6f1b8a4a8ca908604ece97fbf6)](https://www.codacy.com/gh/lordvlad/clock/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lordvlad/clock&amp;utm_campaign=Badge_Grade)
 
 Track your working hours on the command line
 
