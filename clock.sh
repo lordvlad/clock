@@ -131,14 +131,14 @@ EOF
             cur=$(eval "tail -n1 $file | awk '\$2==\"in\" {print \$3}'")
             if [[ -n $cur ]]
             then
-                echo -e "$now\tout\t$cur\t$message" >> $file
+                echo -e "$now\tout\t$cur\t$message" >> "$file"
                 echo "clocked out $cur"
             fi
         fi
     }
 
     function clockIn() {
-        echo -e "$now\tin\t$task\t$message" >> $file
+        echo -e "$now\tin\t$task\t$message" >> "$file"
         echo "clocked in $task"
     }
 
@@ -155,7 +155,7 @@ EOF
     # clock out
     if [[ $command = "out" ]]
     then
-        clockOut $task
+        clockOut "$task"
         exit 0
     fi
 
@@ -233,13 +233,6 @@ EOF
     then
         if [[ -f $file ]]
         then
-            if [[ $taskSet = true ]]
-            then
-                tmp=${task//\//\\\/}
-            else
-                tmp=""
-            fi
-
             # start first awk command
             cmd="awk -F $'\t' "
 
@@ -275,9 +268,6 @@ EOF
 
             # sort results by taskname
             cmd="$cmd | sort -k2"
-
-            #cmd="awk -F $'\t' '/out.*$tmp/{s=\$1-a; print s FS \$3 FS \$4}{a=\$1}' $file"
-            #cmd="$cmd | sort -k2"
 
             # do second awk command
             # here we sum up all lines that have he same task
