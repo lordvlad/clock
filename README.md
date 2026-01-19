@@ -34,7 +34,7 @@ If no task is specified, the current working directory will be used as task spec
 
 ### Options
 -   `-m|--message`      record additional message when clocking in/out
--   `-f|--file`         where to save the clocks, defaults to `$HOME/.clocks`
+-   `-f|--file`         where to save the clocks, defaults to `$HOME/.clock`
 -   `   --by-task`      sort log entries by task for `clock log`
 -   `   --gt=DATE`      with `clock log`, show only entries after `DATE`, with `clock list` sum up only entries after `DATE`.
                         `DATE` can be any string that unix' `date` understands
@@ -42,7 +42,7 @@ If no task is specified, the current working directory will be used as task spec
                         `DATE` can be any string that unix' `date` understands
 
 ### Environment Variables
--   `CLOCK_FILE`        where to save the clocks, defaults to `$HOME/.clocks`. 
+-   `CLOCK_FILE`        where to save the clocks, defaults to `$HOME/.clock`. 
                         If it starts with `GIT_ROOT`, the path will be resolved relative to the closest parent directory containing a `.git` folder.
                         Missing directories will be created automatically.
                         If `GIT_ROOT` is used but no git repository is found, clock will exit with an error.

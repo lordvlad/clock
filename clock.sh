@@ -22,7 +22,7 @@ task:
 
 options:
   -m|--message=MSG  record additional message when clocking in/out
-  -f|--file=FILE    where to save the clocks, defaults to \$HOME/.clocks
+  -f|--file=FILE    where to save the clocks, defaults to \$HOME/.clock
                     can also be set via CLOCK_FILE environment variable
                     if CLOCK_FILE starts with GIT_ROOT, it will be resolved
                     relative to the closest parent directory with a .git folder
@@ -33,7 +33,7 @@ options:
                     summarize only entries before DATE for list view
 
 environment variables:
-  CLOCK_FILE      where to save the clocks, defaults to \$HOME/.clocks
+  CLOCK_FILE      where to save the clocks, defaults to \$HOME/.clock
                   if starts with GIT_ROOT, will be resolved relative to
                   the closest git repository root (parent with .git folder)
 
