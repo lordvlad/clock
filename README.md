@@ -41,6 +41,18 @@ If no task is specified, the current working directory will be used as task spec
 -   `    --lt=DATE`     with `clock log`, show only entries before `DATE`, with `clock list` sum up only entries before `DATE`.
                         `DATE` can be any string that unix' `date` understands
 
+### Environment Variables
+-   `CLOCK_FILE`        where to save the clocks, defaults to `$HOME/.clocks`. 
+                        If it starts with `GIT_ROOT`, the path will be resolved relative to the closest parent directory containing a `.git` folder.
+                        Missing directories will be created automatically.
+                        If `GIT_ROOT` is used but no git repository is found, clock will exit with an error.
+
+**Example:**
+```sh
+export CLOCK_FILE=GIT_ROOT/docs/worklog
+clock in  # Uses ./docs/worklog relative to the git repository root
+```
+
 
 ## Examples
 

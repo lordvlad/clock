@@ -1,6 +1,6 @@
 {
   "name": "clock",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Track your working hours on the command line",
   "install": "make install",
   "scripts": [ "clock.sh" ]

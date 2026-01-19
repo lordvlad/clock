@@ -2,7 +2,7 @@
 
 function clock() {
     read -r -d '' USAGE <<EOF
-clock task timer v0.0.1
+clock task timer v0.0.2
 usage: clock <command> [<task>] [<options>]
 
 Track your working times using file system directories as
@@ -22,12 +22,20 @@ task:
 
 options:
   -m|--message=MSG  record additional message when clocking in/out
-  -f|--file=FILE    where to save the clocks, defaults to $HOME/.clocks
+  -f|--file=FILE    where to save the clocks, defaults to \$HOME/.clocks
+                    can also be set via CLOCK_FILE environment variable
+                    if CLOCK_FILE starts with GIT_ROOT, it will be resolved
+                    relative to the closest parent directory with a .git folder
      --by-task      sort log entries by task for clock log
      --gt=DATE      show only log entries after DATE
                     summarize only entries after DATE for list view
      --lt=DATE      show only log entries before DATE
                     summarize only entries before DATE for list view
+
+environment variables:
+  CLOCK_FILE      where to save the clocks, defaults to \$HOME/.clocks
+                  if starts with GIT_ROOT, will be resolved relative to
+                  the closest git repository root (parent with .git folder)
 
 EOF
 
@@ -57,6 +65,47 @@ complete -F _clock clock
 EOF
 
 
+    # function to find git root directory
+    function find_git_root() {
+        local current_dir="$PWD"
+        while [[ "$current_dir" != "/" ]]; do
+            if [[ -d "$current_dir/.git" ]]; then
+                echo "$current_dir"
+                return 0
+            fi
+            current_dir="$(dirname "$current_dir")"
+        done
+        return 1
+    }
+
+    # function to resolve clock file path
+    function resolve_clock_file() {
+        local clock_file="$1"
+        
+        # Check if clock_file starts with GIT_ROOT
+        if [[ "$clock_file" =~ ^GIT_ROOT(/|$) ]]; then
+            local git_root
+            git_root=$(find_git_root)
+            
+            if [[ $? -ne 0 ]] || [[ -z "$git_root" ]]; then
+                echo "Error: CLOCK_FILE uses GIT_ROOT but no git repository found in parent directories" >&2
+                exit 1
+            fi
+            
+            # Replace GIT_ROOT with actual git root path
+            clock_file="${clock_file/GIT_ROOT/$git_root}"
+        fi
+        
+        # Create parent directories if they don't exist
+        local clock_dir
+        clock_dir="$(dirname "$clock_file")"
+        if [[ ! -d "$clock_dir" ]]; then
+            mkdir -p "$clock_dir"
+        fi
+        
+        echo "$clock_file"
+    }
+
     # set defaults
     now="$(date +%s)"
     file="$HOME/.clock"
@@ -66,6 +115,11 @@ EOF
     before=""
     after=""
     taskSet=false
+    
+    # Check for CLOCK_FILE environment variable
+    if [[ -n "$CLOCK_FILE" ]]; then
+        file="$CLOCK_FILE"
+    fi
 
     # parse command line parameters
     while [[ $# -gt 0 ]]
@@ -123,6 +177,9 @@ EOF
     then
         task="$(pwd)"
     fi
+
+    # resolve clock file path (handle GIT_ROOT and create directories)
+    file=$(resolve_clock_file "$file")
 
     function clockOut() {
         # find currently clocked in task
