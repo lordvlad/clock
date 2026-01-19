@@ -89,7 +89,7 @@ EOF
             
             if [[ $? -ne 0 ]] || [[ -z "$git_root" ]]; then
                 echo "Error: CLOCK_FILE uses GIT_ROOT but no git repository found in parent directories" >&2
-                exit 1
+                return 1
             fi
             
             # Replace GIT_ROOT with actual git root path
@@ -104,6 +104,7 @@ EOF
         fi
         
         echo "$clock_file"
+        return 0
     }
 
     # set defaults
@@ -180,6 +181,9 @@ EOF
 
     # resolve clock file path (handle GIT_ROOT and create directories)
     file=$(resolve_clock_file "$file")
+    if [[ $? -ne 0 ]]; then
+        exit 1
+    fi
 
     function clockOut() {
         # find currently clocked in task

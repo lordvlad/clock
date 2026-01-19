@@ -1,0 +1,8 @@
+# Test directories
+docs/
+logs/
+subdir/
+
+# Clock files
+.clock
+*.clock
